@@ -27,6 +27,14 @@ const config: GatsbyConfig = {
               precachePages: [`/`],
           },
       },
+      {
+          resolve: 'gatsby-plugin-react-svg',
+          options: {
+              rule: {
+                  include: /\.inline\.svg$/
+              }
+          }
+      },
       'gatsby-plugin-top-layout',
       'gatsby-plugin-mui-emotion',
   ],

@@ -4,11 +4,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import {IconButton} from "gatsby-theme-material-ui";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {CircularProgress, Container, Skeleton, Stack, TextField, Typography} from "@mui/material";
+import {CircularProgress, Container, Grid, Skeleton, Stack, TextField, Typography} from "@mui/material";
 import {Bookmark} from "../interfaces";
 import {FC, useEffect} from "react";
 import {LoadingButton} from "@mui/lab";
-
+import Notfound from '../assets/notfound.inline.svg';
 
 async function createTodo(data: any) {
     const response = await fetch('/.netlify/functions/create', {
@@ -143,6 +143,17 @@ export default function Bookmarks() {
             </ListItem>
         )
     )
+
+    const NoData: FC = () => (
+        <Grid container justifyContent={'center'} alignItems={'center'} sx={{width: '100%', mt:2}}>
+            <Grid item>
+                <Stack alignItems={'center'}>
+                    <Notfound style={{width: '300px', height: '300px'}}/>
+                    <Typography sx={{mt: 2}} variant={'h4'} color={'textSecondary'}>No bookmarks yet</Typography>
+                </Stack>
+            </Grid>
+        </Grid>
+    );
     return (
         <Container maxWidth={'md'} sx={{mt: 5}}>
             <List sx={{width: '100%', bgcolor: 'background.paper'}}>
@@ -170,7 +181,11 @@ export default function Bookmarks() {
                         }}
                         size={'small'} label="URL" variant="outlined" sx={{ml: 2}}/>
                 </ListItem>
-                {isLoading ? <DefaultSkeleton/> : <Bookmarks/>}
+                {
+                    isLoading ? <DefaultSkeleton/>
+                        : bookmarks.length > 0 ? <Bookmarks/>
+                            : <NoData/>
+                }
             </List>
         </Container>
     );
