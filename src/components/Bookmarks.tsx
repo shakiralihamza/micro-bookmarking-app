@@ -10,22 +10,20 @@ import {FC, useEffect} from "react";
 import {LoadingButton} from "@mui/lab";
 
 
-function createTodo(data: any) {
-    return fetch('/.netlify/functions/create', {
+async function createTodo(data: any) {
+    const response = await fetch('/.netlify/functions/create', {
         body: JSON.stringify(data),
         method: 'POST'
-    }).then(response => {
-        return response.json()
-    })
+    });
+    return await response.json();
 }
 
-const deleteTodo = (bookmarkId: string) => {
-    return fetch('/.netlify/functions/delete', {
+const deleteTodo = async (bookmarkId: string) => {
+    const response = await fetch('/.netlify/functions/delete', {
         body: JSON.stringify({id: bookmarkId}),
         method: 'POST',
-    }).then(response => {
-        return response.json()
-    })
+    });
+    return await response.json();
 }
 
 
@@ -93,34 +91,6 @@ export default function Bookmarks() {
 
     //following are the components put in variables to make it easier to read;
     //return statement would just include logic for the components
-    const AddBookmark = () => (
-        <ListItem
-            secondaryAction={
-                <LoadingButton
-                    onClick={handleSubmit}
-                    loading={isCreating}
-                    variant="contained"
-                >
-                    Add
-                </LoadingButton>
-            }>
-            <TextField
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                size={'small'} label="Bookmark Title" variant="outlined"/>
-            <TextField
-                helperText={validUrl ? '' :
-                    <Typography variant={'body2'} color={'error'}>Invalid URL</Typography>}
-                value={url}
-                onChange={(e) => {
-                    setValidUrl(true)
-                    setUrl(e.target.value)
-                }}
-                size={'small'} label="URL" variant="outlined" sx={{ml: 2}}/>
-
-        </ListItem>
-    );
-
 
     // @ts-ignore
     const DefaultSkeleton: FC = () => (
@@ -176,7 +146,30 @@ export default function Bookmarks() {
     return (
         <Container maxWidth={'md'} sx={{mt: 5}}>
             <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                <AddBookmark/>
+                <ListItem
+                    secondaryAction={
+                        <LoadingButton
+                            onClick={handleSubmit}
+                            loading={isCreating}
+                            variant="contained"
+                        >
+                            Add
+                        </LoadingButton>
+                    }>
+                    <TextField
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        size={'small'} label="Bookmark Title" variant="outlined"/>
+                    <TextField
+                        helperText={validUrl ? '' :
+                            <Typography variant={'body2'} color={'error'}>Invalid URL</Typography>}
+                        value={url}
+                        onChange={(e) => {
+                            setValidUrl(true)
+                            setUrl(e.target.value)
+                        }}
+                        size={'small'} label="URL" variant="outlined" sx={{ml: 2}}/>
+                </ListItem>
                 {isLoading ? <DefaultSkeleton/> : <Bookmarks/>}
             </List>
         </Container>
