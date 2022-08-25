@@ -8,7 +8,28 @@ const config: GatsbyConfig = {
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: [],
+  plugins: [
+      {
+          resolve: `gatsby-plugin-manifest`,
+          options: {
+              name: `Bookmarking App`,
+              short_name: `Bookmarking App`,
+              start_url: `/`,
+              background_color: `#f7f0eb`,
+              theme_color: `#3f4ab0`,
+              display: `standalone`,
+              icon: `src/images/abstract.svg`,
+          },
+      },
+      {
+          resolve: `gatsby-plugin-offline`,
+          options: {
+              precachePages: [`/`],
+          },
+      },
+      'gatsby-plugin-top-layout',
+      'gatsby-plugin-mui-emotion',
+  ],
 }
 
 export default config
