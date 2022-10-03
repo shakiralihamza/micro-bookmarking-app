@@ -1,10 +1,12 @@
+// noinspection RegExpRedundantEscape
+
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import {IconButton} from "gatsby-theme-material-ui";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {CircularProgress, Container, Grid, Skeleton, Stack, TextField, Typography} from "@mui/material";
+import {Box, CircularProgress, Container, Grid, Skeleton, Stack, TextField, Typography} from "@mui/material";
 import {Bookmark} from "../interfaces";
 import {FC, useEffect} from "react";
 import {LoadingButton} from "@mui/lab";
@@ -156,17 +158,9 @@ export default function Bookmarks() {
     );
     return (
         <Container maxWidth={'md'} sx={{mt: 5}}>
-            <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                <ListItem
-                    secondaryAction={
-                        <LoadingButton
-                            onClick={handleSubmit}
-                            loading={isCreating}
-                            variant="contained"
-                        >
-                            Add
-                        </LoadingButton>
-                    }>
+            <List sx={{width: '100%'}}>
+                <ListItem>
+                <Stack spacing={2} direction={{xs:'column', sm:'row'}} sx={{width:'100%'}}>
                     <TextField
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -180,12 +174,22 @@ export default function Bookmarks() {
                             setUrl(e.target.value)
                         }}
                         size={'small'} label="URL" variant="outlined" sx={{ml: 2}}/>
+                    <Box sx={{flexGrow:1}}/>
+                    <LoadingButton
+                        onClick={handleSubmit}
+                        loading={isCreating}
+                        variant="contained"
+                    >
+                        Add
+                    </LoadingButton>
+                </Stack>
                 </ListItem>
                 {
                     isLoading ? <DefaultSkeleton/>
                         : bookmarks.length > 0 ? <Bookmarks/>
                             : <NoData/>
                 }
+
             </List>
         </Container>
     );
