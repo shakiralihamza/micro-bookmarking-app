@@ -147,7 +147,7 @@ export default function Bookmarks() {
     )
 
     const NoData: FC = () => (
-        <Grid container justifyContent={'center'} alignItems={'center'} sx={{width: '100%', mt:2}}>
+        <Grid container justifyContent={'center'} alignItems={'center'} sx={{width: '100%', mt: 2}}>
             <Grid item>
                 <Stack alignItems={'center'}>
                     <Notfound style={{width: '300px', height: '300px'}}/>
@@ -160,29 +160,29 @@ export default function Bookmarks() {
         <Container maxWidth={'md'} sx={{mt: 5}}>
             <List sx={{width: '100%'}}>
                 <ListItem>
-                <Stack spacing={2} direction={{xs:'column', sm:'row'}} sx={{width:'100%'}}>
-                    <TextField
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        size={'small'} label="Bookmark Title" variant="outlined"/>
-                    <TextField
-                        helperText={validUrl ? '' :
-                            <Typography variant={'body2'} color={'error'}>Invalid URL</Typography>}
-                        value={url}
-                        onChange={(e) => {
-                            setValidUrl(true)
-                            setUrl(e.target.value)
-                        }}
-                        size={'small'} label="URL" variant="outlined" sx={{ml: 2}}/>
-                    <Box sx={{flexGrow:1}}/>
-                    <LoadingButton
-                        onClick={handleSubmit}
-                        loading={isCreating}
-                        variant="contained"
-                    >
-                        Add
-                    </LoadingButton>
-                </Stack>
+                    <Stack spacing={2} direction={{xs: 'column', sm: 'row'}} sx={{width: '100%'}}>
+                        <TextField
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            size={'small'} label="Bookmark Title" variant="outlined"/>
+                        <TextField
+                            helperText={validUrl ? '' :
+                                <Typography variant={'body2'} color={'error'}>Invalid URL</Typography>}
+                            value={url}
+                            onChange={(e) => {
+                                setValidUrl(true)
+                                setUrl(e.target.value)
+                            }}
+                            size={'small'} label="URL" variant="outlined" sx={{ml: 2}}/>
+                        <Box sx={{flexGrow: 1}}/>
+                        <LoadingButton
+                            onClick={handleSubmit}
+                            loading={isCreating}
+                            variant="contained"
+                        >
+                            Add
+                        </LoadingButton>
+                    </Stack>
                 </ListItem>
                 {
                     isLoading ? <DefaultSkeleton/>
