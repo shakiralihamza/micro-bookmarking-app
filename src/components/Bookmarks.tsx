@@ -189,7 +189,6 @@ export default function Bookmarks() {
                         : bookmarks.length > 0 ? <Bookmarks/>
                             : <NoData/>
                 }
-
             </List>
         </Container>
     );
